@@ -1,97 +1,120 @@
 {
 	"tactile":{
-		"1":{
-			"id":1,
+		"0":{
+			"id":0,
 			"cooldown":0,
 			"event": "nothing"
 		},
+		"1":{
+			"id":1,
+			"cooldown":300,
+			"event": "attack",
+			"target": "Jill"
+		},
 		"2":{
 			"id":2,
-			"cooldown":120,
-			"event": "soundboard"
+			"cooldown":300,
+			"event": "attack",
+			"target": "Claire"
 		},
 		"3":{
 			"id":3,
-			"cooldown":120,
-			"event": "soundboard"
+			"cooldown":300,
+			"event": "attack",
+			"target": "Leon"
 		},
 		"4":{
 			"id":4,
-			"cooldown":120,
-			"event": "soundboard"
+			"cooldown":300,
+			"event": "attack",
+			"target": "Chris"
 		},
 		"5":{
 			"id":5,
-			"cooldown":120,
-			"event": "soundboard"
+			"cooldown":3600,
+			"event": "poison",
+			"target": "poison"
 		},
 		"6":{
 			"id":6,
-			"cooldown":120,
+			"cooldown":20,
 			"event": "soundboard"
 		},
 		"7":{
 			"id":7,
-			"cooldown":120,
+			"cooldown":20,
 			"event": "soundboard"
 		},
 		"8":{
 			"id":8,
-			"cooldown":0,
-			"event": "nothing"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"9":{
 			"id":9,
-			"cooldown":600,
-			"coins": 50,
-			"event": "coins"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"10":{
 			"id":10,
-			"cooldown":600,
-			"coins": 100,
-			"event": "coins"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"11":{
 			"id":11,
-			"cooldown":600,
-			"coins": 200,
-			"event": "coins"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"12":{
 			"id":12,
-			"cooldown":0,
-			"event": "nothing"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"13":{
-			"id":3,
-			"cooldown":600,
-			"event": "clickerBoss"
+			"id":13,
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"14":{
 			"id":14,
-			"cooldown":600,
-			"event": "confetti"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"15":{
 			"id":15,
-			"cooldown":600,
-			"event": "fireworks"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"16":{
 			"id":16,
-			"cooldown":300,
-			"event": "catpic"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"17":{
 			"id":17,
-			"cooldown":300,
-			"event": "dogpic"
+			"cooldown":20,
+			"event": "soundboard"
 		},
 		"18":{
 			"id":18,
-			"cooldown":300,
-			"event": "numberTrivia"
+			"cooldown":20,
+			"event": "soundboard"
+		},
+		"19":{
+			"id":19,
+			"cooldown":20,
+			"event": "soundboard"
+		},
+		"20":{
+			"id":20,
+			"cooldown":20,
+			"event": "soundboard"
+		},
+		"21":{
+			"id":21,
+			"cooldown":20,
+			"event": "soundboard"
 		}
+		
 	}
 }

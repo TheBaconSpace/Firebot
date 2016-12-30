@@ -17,24 +17,8 @@ function beamSocketConnect(){
 			var obj = JSON.parse(evt.data);
 			var event = obj.event;
 			
-			if (event == "mouseclick"){
-				mouseclick(obj);
-			}
-			
-			if (event == "bossFight"){
-				// Boss fight!
-				canvasSetup();
-				bossGenerator(obj);
-				bossRender();
-				bossStart();
-			}
-			
-			if(event == "fireworks"){
-				fireworks();
-			}
-			
-			if (event == "confetti"){
-				confetti();
+			if (event == "attack"){
+				attack(obj);
 			}
 			
 			if (event == "soundboard"){
@@ -55,89 +39,6 @@ function beamSocketConnect(){
 }
 beamSocketConnect();
 
-///////////////////////
-// Interactive Games
-//////////////////////
-
-// Mouse Clicks for Interactive
-function mouseclick(obj){
-
-	var mousex = Math.round(obj.mousex);
-	var mousey = Math.round(obj.mousey);
-	var clicks = obj.clicks;
-
-	gameClicker(mousex, mousey, clicks);
-}
-// Set up canvas.
-function canvasSetup(){
-		elem = document.getElementById('game');
-		elemLeft = elem.offsetLeft;
-		elemTop = elem.offsetTop;
-		context = elem.getContext('2d');
-}
-
-
-////////////////////
-// BOSS FIGHT
-////////////////////
-
-// Collision Checker
-function gameClicker(mousex, mousey, clicks){
-    var x = mousex,
-        y = mousey;
-		
-		
-    elements.forEach(function(element) {
-        if (y > element.y - element.height && y < element.y + element.height && x > element.x - element.width && x < element.x + element.width) {
-            // Element was clicked!
-			
-			console.log(mousex, mousey, clicks);
-			timesClicked = timesClicked + clicks;
-			
-        }
-    });
-}
-
-// Add element.
-function bossGenerator(obj){
-	var bossName = obj.name;
-	console.log(bossName);
-	elements = [];
-	var screenWidth = 1920;
-	var screenHeight = 1080;
-	
-	elements.push({
-		image: './images/monsters/'+bossName+'.png',
-		width: 350,
-		height: 350,
-		y: 500,
-		x: 1500,
-		isVisible: true
-	});
-}
-function bossRender(){
-	// Render elements.
-	elements.forEach(function(element) {
-		if(element.isVisible === true){
-			var imageObj = new Image();
-			imageObj.onload = function(){
-				context.drawImage(imageObj, element.x, element.y);
-			}
-			imageObj.src = element.image;
-		}
-	});
-}
-function bossStart(){
-	$('.horn-sound').trigger('play');
-	setTimeout(function(){ 
-		ws.send(JSON.stringify({
-			"event": "bossFightEnd",
-			"data": timesClicked
-		}));
-		timesClicked = 0;
-		context.clearRect(0, 0, 1920, 1080);
-	}, 20000);
-}
 
 ////////////////////////
 // Soundboard
@@ -150,27 +51,20 @@ function soundboard(obj){
 ////////////////////////
 // Effects
 ///////////////////////
-function fireworks(){
-	var image = "./images/effects/fireworks.gif"+"?a="+Math.random();
-	$('.wrapper').append('<div class="fireworks" style="display:none"><img src="'+image+'" width="1920" height="1080"></div>');
-	$('.fireworks').fadeIn('fast');
-	$('.party-sound').trigger('play');
+function attack(obj){
+	var target = obj.target;
+
+	$('.'+target+'-attack').trigger("play");
+	
+	var image = "./images/"+target+".gif"+"?a="+Math.random();
+	$('.wrapper').append('<div class="attack" style="display:none"><img src="'+image+'" width="800" height="600"></div>');
+	$('.attack').fadeIn('fast');
 	setTimeout(function(){ 
-		$('.fireworks').fadeOut('fast');
-		$('.fireworks').remove();
-	}, 6250);
+		$('.attack').fadeOut('fast');
+		$('.attack').remove();
+	}, 10000);
 }
 
-function confetti(){
-	var image = "./images/effects/confetti.gif"+"?a="+Math.random();
-	$('.wrapper').append('<div class="confetti" style="display:none"><img src="'+image+'" width="1920" height="1080"></div>');
-	$('.confetti').fadeIn('fast');
-	$('.party-sound').trigger('play');
-	setTimeout(function(){ 
-		$('.confetti').fadeOut('fast');
-		$('.confetti').remove();
-	}, 7250);
-}
 
 
 // Error Handling & Keep Alive
