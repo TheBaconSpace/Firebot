@@ -1,10 +1,10 @@
 {
-  "name": "firebot",
+  "name": "Mixbot",
   "version": "1.0.0",
   "description": "",
-  "main": "interactive.js",
+  "main": "mixtopher.js",
   "scripts": {
-    "start": "node interactive.js"
+    "start": "node mixtopher.js"
   },
   "keywords": [],
   "author": "",
@@ -13,10 +13,7 @@
     "beam-client-node": "^0.8.0",
     "beam-interactive-node": "^0.3.2",
     "node-json-db": "^0.7.3",
-    "random-puppy": "^1.1.0",
     "request": "^2.74.0",
-    "say": "^0.9.1",
-    "validator": "^6.0.0",
     "ws": "^1.1.1",
     "xml2js": "^0.4.17"
   }

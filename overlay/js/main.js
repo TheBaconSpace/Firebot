@@ -53,6 +53,7 @@ function soundboard(obj){
 ///////////////////////
 function attack(obj){
 	var target = obj.target;
+	console.log('Playing: .'+target+'-attack')
 
 	$('.'+target+'-attack').trigger("play");
 	

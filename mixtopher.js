@@ -8,15 +8,11 @@ const WebSocketServer = require('ws').Server,
         port: 8080
     });
 const JsonDB = require('node-json-db');
-const say = require('say');
 const request = require('request');
 const parseString = require('xml2js').parseString;
-const validator = require('validator');
-const randomPuppy = require('random-puppy');
 
 var dbAuth = new JsonDB("./settings/auth", true, false);
 var dbControls = new JsonDB('./controls/controls', true, false);
-var dbClickerBoss = new JsonDB('./settings/clickerBoss', true, false);
 
 
 // Global Vars
@@ -97,14 +93,6 @@ function setupRobotEvents(robot) {
             tactile(report.tactile);
             tactileProgress(report.tactile);
         }
-        if (report.joystick.length > 0) {
-            joystick(report.joystick[0]);
-            joystickProgress(report.joystick[0]);
-        }
-        if (report.screen.length > 0) {
-            screen(report.screen[0]);
-            screenProgress(report.screen[0]);
-        }
 
         progressUpdate(robot);
     });
@@ -127,9 +115,6 @@ wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
         var message = JSON.parse(message);
         var eventType = message.event;
-        if (eventType == "bossFightEnd") {
-            bossFightEnd(message.data);
-        }
     });
 });
 
@@ -158,23 +143,6 @@ function tactile(tactile) {
     }
 }
 
-// Joystick Controls
-function joystick(report) {
-    // DO SOMETHING WITH JOYSTICK REPORT.
-}
-
-// Screen Controls
-function screen(report) {
-    // DO SOMETHING WITH SCREEN REPORT.
-    var mean = report.coordMean;
-    var horizontal = 1920 * mean.x;
-    var vertical = 1080 * mean.y;
-    var clicks = report.clicks;
-    if (isNaN(horizontal) === false && isNaN(vertical) === false) {
-        guiBroadcast('{ "event": "mouseclick", "mousex": ' + horizontal + ', "mousey": ' + vertical + ', "clicks": ' + clicks + '}');
-    }
-}
-
 ////////////////////
 // Progress Updates
 ////////////////////
@@ -182,19 +150,15 @@ function screen(report) {
 // Progress Compile
 function progressUpdate(robot) {
     var tactile = app.tactileProgress;
-    var screen = app.screenProgress;
-    var joystick = app.joystickProgress;
     var lastProgress = app.lastProgress
 
     // Compile report.
     var progress = {
-        "tactile": tactile,
-        "screen": screen,
-        "joystick": joystick
+        "tactile": tactile
     }
 
     // Send progress update if it has any new info.
-	if( isEmpty(tactile) === false || isEmpty(screen) === false || isEmpty(joystick) === false ){
+	if( isEmpty(tactile) === false){
 		robot.send(new Packets.ProgressUpdate(progress));
 	}
 
@@ -203,22 +167,15 @@ function progressUpdate(robot) {
     
     // Clear temp progress reports.
     app.tactileProgress = [];
-    app.screenProgress = [];
-    app.joystickProgress = [];
 }
 
 // Tactile
 function tactileProgress(tactile) {
     var json = [];
 
-    // Events fired this report.
-    var soundboardFired = false;
-    var funFired = false;
-
     // Loop through report.
-    for (i = 0; i < tactile.length; i++) {
+    for (var i = 0; i < tactile.length; i++) {
         var rawid = tactile[i].id;
-        var holding = tactile[i].holding;
         var press = tactile[i].pressFrequency;
 
         var controls = app.controls;
@@ -229,92 +186,41 @@ function tactileProgress(tactile) {
         // Convert JSON Cooldown Number to Milliseconds
         var cooldown = parseInt(cooldown) * 1000;
 
-        if (isNaN(holding) === false && holding > 0 || isNaN(press) === false && press > 0) {
+        if ( isNaN(press) === false && press > 0 ) {
 			
-			if(event == "attack" && funFired === false){
-				// Soundboard hit!
-				// Cooldown 1-4
-				i = 1;
-				while (i < 5){
-					json.push({
-						"id": i,
-						"cooldown": cooldown,
-						"fired": true,
-						"progress": 1
-					});
-					i++;
-				}
-			} else if ( event == "soundboard" && soundboardFired === false){
+			if( event == "attack" ){
 				// Attack hit!
-				// Cooldown 6-21
-				i = 6;
-				while (i < 22){
+				// Cooldown 1-4
+                for (var a = 1; a < 5; a++){
 					json.push({
-						"id": i,
+						"id": a,
 						"cooldown": cooldown,
 						"fired": true,
-						"progress": 1
+						"progress": 0
 					});
-					i++;
+				}
+			} else if ( event == "soundboard"){
+				// Soundboard hit!
+				// Cooldown 6-21
+				for (var b = 6; b < 22; b++){
+					json.push({
+						"id": b,
+						"cooldown": cooldown,
+						"fired": true,
+						"progress": 0
+					});
 				}
 			} else {
 				json.push({
 					"id": rawid,
 					"cooldown": cooldown,
 					"fired": true,
-					"progress": 1
+					"progress": 0
 				});
 			}
-			
         };
     }
     app.tactileProgress = json;
-}
-
-// Screen
-function screenProgress(screen) {
-
-    var json = [];
-    var rawid = screen.id;
-    var mean = screen.coordMean;
-    var screenX = mean.x;
-    var screenY = mean.y;
-    var clicks = screen.clicks;
-
-    if (clicks > 0) {
-        json.push({
-            "id": rawid,
-            "clicks": [{
-                "coordinate": mean,
-                "intensity": 1
-            }]
-        });
-    }
-    app.screenProgress = json;
-}
-
-// Joystick
-function joystickProgress(joystick) {
-    var json = [];
-    var rawid = joystick.id;
-    var mean = joystick.coordMean;
-    var joyX = mean.x;
-    var joyY = mean.y;
-    if (isNaN(joyX) === true) {
-        var joyX = 0;
-    }
-    if (isNaN(joyY) === true) {
-        var joyY = 0;
-    }
-
-    var rad = Math.atan2(joyY, joyX);
-
-    json.push({
-        "id": rawid,
-        "angle": rad,
-        "intensity": 1
-    });
-    app.joystickProgress = json;
 }
 
 ////////////////////

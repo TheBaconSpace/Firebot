@@ -7,25 +7,25 @@
 		},
 		"1":{
 			"id":1,
-			"cooldown":300,
+			"cooldown":900,
 			"event": "attack",
 			"target": "Jill"
 		},
 		"2":{
 			"id":2,
-			"cooldown":300,
+			"cooldown":900,
 			"event": "attack",
 			"target": "Claire"
 		},
 		"3":{
 			"id":3,
-			"cooldown":300,
+			"cooldown":900,
 			"event": "attack",
 			"target": "Leon"
 		},
 		"4":{
 			"id":4,
-			"cooldown":300,
+			"cooldown":900,
 			"event": "attack",
 			"target": "Chris"
 		},
@@ -37,82 +37,82 @@
 		},
 		"6":{
 			"id":6,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"7":{
 			"id":7,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"8":{
 			"id":8,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"9":{
 			"id":9,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"10":{
 			"id":10,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"11":{
 			"id":11,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"12":{
 			"id":12,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"13":{
 			"id":13,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"14":{
 			"id":14,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"15":{
 			"id":15,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"16":{
 			"id":16,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"17":{
 			"id":17,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"18":{
 			"id":18,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"19":{
 			"id":19,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"20":{
 			"id":20,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		},
 		"21":{
 			"id":21,
-			"cooldown":20,
+			"cooldown":300,
 			"event": "soundboard"
 		}
 		
